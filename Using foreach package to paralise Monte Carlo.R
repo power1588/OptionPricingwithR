@@ -12,7 +12,7 @@ MCPrice <- function(x = 1, t = 0, T = 1, r = 1, sigma = 1,
        tmp <- c(x * exp((r - 0.5 * sigma^2) * (T - t) + sigma *
                          + sqrt(T - t) * u), x * exp((r - 0.5 * sigma^2) * (T -
                                                                               + t) + sigma * sqrt(T - t) * (-u)))
-       mean(sapply(tmp, function(xx) f(xx)))
+       mean(sapply(tmp, function(xxx) f(xxx)))
      }
     nodes <- getDoParWorkers()
     p <- foreach(m = rep(M/nodes, nodes),.combine = "c") %dopar%
