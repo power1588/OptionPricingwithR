@@ -20,15 +20,17 @@ MCPrice <- function(x = 1, t = 0, T = 1, r = 1, sigma = 1,
       p <- mean(p)
       p * exp(-r * (T - t))
 }
+ptm <- proc.time()
 f <- function(x) max(0, x - 110)
 set.seed(123)
-M <- 50000
+M <- 150000
 S0 <- 100
 r <- 0.05
 sigma <- 0.25
+nodes <- 4
 T <- 1/4
 MCPrice(x = S0, t = 0, T = T, r = r, sigma, M = M, f = f)
-
+proc.time() - ptm
 
 
 
