@@ -13,7 +13,7 @@ p <- function(sigma) call.price(x = S0, t = 0, T = T, r = r,
                                     K = K, sigma = sigma)
 K <- 80
 curve(p, 0, 1, xlab = expression(sigma),
-         ylab = expression(P[t]))
+         ylab = expression(C[t]))
 K <- 100
 curve(p, 0, 1, add = TRUE, lty = 2)
 K <- 150
