@@ -14,16 +14,19 @@ MCAsian <- function(S0 = 100, K = 100, t = 0, T = 1, mu = 0.1,
     p <- mean(p)
     p * exp(-r * (T - t))
 }
-'''
-M <- 5000
-mu <- 0.1
-s <- 0.5
-K <- 110
-r <- 0.01
-T <- 1
-S0 <- 100
-set.seed(123)
-p0 <- MCAsian(S0 = S0, K = K, t = 0, T = T, mu = mu, sigma = s,
-                   r = r, N = 250, M = M)
-p0
-'''
+
+#using if to annotate the code block
+#which test the MCAsian function
+if(1<0){
+  M <- 5000
+  mu <- 0.1
+  s <- 0.5
+  K <- 110
+  r <- 0.01
+  T <- 1
+  S0 <- 100
+  set.seed(123)
+  p0 <- MCAsian(S0 = S0, K = K, t = 0, T = T, mu = mu, sigma = s,
+                r = r, N = 250, M = M)
+  p0
+}
