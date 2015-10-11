@@ -24,3 +24,9 @@ sigma.imp <- GBSVolatility(p, "c", S = S0, X = K, Time = T,
                            r = r,
                            b = r)
 sigma.imp
+require(sde)
+cp <- cpoint(as.ts(X))
+cp
+time(X)[cp$k0]
+plot(X)
+abline(v = time(X)[cp$k0], lty = 3)
