@@ -110,6 +110,18 @@ callprice3 <- lapply(1:N3, function(i) getURL(url3[i], .encoding='GBK'))
 url4 <- lapply(1:N4, function(i) paste0('http://hq.sinajs.cn/list=',callindex4[i]))
 callprice4 <- lapply(1:N4, function(i) getURL(url4[i], .encoding='GBK'))
 
+url5 <- lapply(1:N1, function(i) paste0('http://hq.sinajs.cn/list=',putindex1[i]))
+putprice1 <- lapply(1:N1, function(i) getURL(url5[i], .encoding='GBK'))
+
+url6 <- lapply(1:N2, function(i) paste0('http://hq.sinajs.cn/list=',putindex2[i]))
+putprice2 <- lapply(1:N2, function(i) getURL(url6[i], .encoding='GBK'))
+
+url7 <- lapply(1:N3, function(i) paste0('http://hq.sinajs.cn/list=',putindex3[i]))
+putprice3 <- lapply(1:N3, function(i) getURL(url7[i], .encoding='GBK'))
+
+url8 <- lapply(1:N4, function(i) paste0('http://hq.sinajs.cn/list=',putindex4[i]))
+putprice4 <- lapply(1:N4, function(i) getURL(url8[i], .encoding='GBK'))
+
 
 
 #convert to character
@@ -129,6 +141,23 @@ callprice4 <- unlist(callprice4)
 c_price4 <- sapply(1:N4, function(i) strsplit(callprice4[i], ","))
 cask_price4 <- sapply(1:N4, function(i) as.double(c_price4[[i]][4]))
 
+
+putprice1 <- unlist(putprice1)
+p_price1 <- sapply(1:N1, function(i) strsplit(putprice1[i], ","))
+pask_price1 <- sapply(1:N1, function(i) as.double(p_price1[[i]][4]))
+
+putprice2 <- unlist(putprice2)
+p_price2 <- sapply(1:N2, function(i) strsplit(putprice2[i], ","))
+pask_price2 <- sapply(1:N2, function(i) as.double(p_price2[[i]][4]))
+
+putprice3 <- unlist(putprice3)
+p_price3 <- sapply(1:N3, function(i) strsplit(putprice3[i], ","))
+pask_price3 <- sapply(1:N3, function(i) as.double(p_price3[[i]][4]))
+
+putprice4 <- unlist(putprice4)
+p_price4 <- sapply(1:N4, function(i) strsplit(putprice4[i], ","))
+pask_price4 <- sapply(1:N4, function(i) as.double(p_price4[[i]][4]))
+
 #extract the strikes
 a1 <- sapply(1:N1, function(i) regexpr("月[0-9]{4}",callprice1[i]))
 strikes1 <- sapply(1:N1, function(i) substr(callprice1[i],a1[i]+ 1, a1[i]+4))
@@ -145,6 +174,22 @@ X3 <- sapply(1:N3, function(i) as.double(strikes3[i]))
 a4 <- sapply(1:N4, function(i) regexpr("月[0-9]{4}",callprice4[i]))
 strikes4 <- sapply(1:N4, function(i) substr(callprice4[i],a4[i]+ 1, a4[i]+4))
 X4 <- sapply(1:N4, function(i) as.double(strikes4[i]))
+
+#a5 <- sapply(1:N1, function(i) regexpr("月[0-9]{4}",putprice1[i]))
+#strikes5 <- sapply(1:N1, function(i) substr(putprice1[i],a5[i]+ 1, a5[i]+4))
+#X5 <- sapply(1:N1, function(i) as.double(strikes5[i]))
+
+#a6 <- sapply(1:N2, function(i) regexpr("月[0-9]{4}",putprice2[i]))
+#strikes6 <- sapply(1:N1, function(i) substr(putprice1[i],a6[i]+ 1, a6[i]+4))
+#X6 <- sapply(1:N2, function(i) as.double(strikes6[i]))
+
+#a7 <- sapply(1:N3, function(i) regexpr("月[0-9]{4}",putprice3[i]))
+#strikes7 <- sapply(1:N3, function(i) substr(putprice3[i],a7[i]+ 1, a7[i]+4))
+#X7 <- sapply(1:N3, function(i) as.double(strikes7[i]))
+
+#a8 <- sapply(1:N4, function(i) regexpr("月[0-9]{4}",putprice4[i]))
+#strikes8 <- sapply(1:N4, function(i) substr(putprice4[i],a8[i]+ 1, a8[i]+4))
+#X8 <- sapply(1:N4, function(i) as.double(strikes8[i]))
 
 # bid_vol bid present_p ask ask_vol position change strike 
 # yesterday_p today_op up_limit down_limit 
@@ -165,6 +210,20 @@ smilec3 <- sapply(1:N3, function(i) GBSVolatility(cask_price3[i], type1,
 smilec4 <- sapply(1:N4, function(i) GBSVolatility(cask_price4[i], type1,
                                                  S = underlying,
                                                  X = X4[i]/1000, Time = T4, r = r, b = b))
+smilep1 <- sapply(1:N1, function(i) GBSVolatility(pask_price1[i], type2,
+                                                  S = underlying,
+                                                  X = X1[i]/1000, Time = T1, r = r, b = b))
+smilep2 <- sapply(1:N2, function(i) GBSVolatility(pask_price2[i], type2,
+                                                  S = underlying,
+                                                  X = X2[i]/1000, Time = T2, r = r, b = b))
+smilep3 <- sapply(1:N3, function(i) GBSVolatility(pask_price3[i], type2,
+                                                  S = underlying,
+                                                  X = X3[i]/1000, Time = T3, r = r, b = b))
+smilep4 <- sapply(1:N4, function(i) GBSVolatility(pask_price4[i], type2,
+                                                  S = underlying,
+                                                  X = X4[i]/1000, Time = T4, r = r, b = b))
+
+
 
 #ignore the put temporarily
 if (1<0 ){
@@ -212,15 +271,54 @@ title("The volatility smaile")
 lines(X2/1000,smilec2, lty=2 )
 legend(2.2,0.5,legend = c("call1601","call1602"), lty = 1:2)
 
+#plot the volatility smile
+par(mfrow = c(2,2))
+plot(X1/1000,smilec1,type = "l",xlab = "strikes", ylab="implied vol")
+title("The volatility smaile of 1601")
+plot(X2/1000,smilec2,type = "l",xlab = "strikes", ylab="implied vol")
+title("The volatility smaile of 1602")
+plot(X3/1000,smilec3,type = "l",xlab = "strikes", ylab="implied vol")
+title("The volatility smaile of 1603")
+plot(X4/1000,smilec4,type = "l",xlab = "strikes", ylab="implied vol")
+title("The volatility smaile of 1604")
+
+#use persp to draw 3d plot
+jet.colors <- colorRampPalette(c("blue","red"))
+nbcol <- 100
+color <- jet.colors(nbcol)
+facetcol <- cut(smilep, nbcol)
+persp(Strike, Time, smilep, col = color[facetcol], ticktype = "detailed", expand = 0.5 ,theta = 215, phi = 30,
+      xlab = "Strikes", ylab = "Maturaty", zlab = "IV", main = "The implied volatility surface of put option")
+
+
 }
 
-#plot the surface
-smilec <- data.frame(smilec1, smilec2,smilec3[9:17],smilec4[2:10] )
-smilec <- as.matrix(smilec)
+
+par(mfrow = c(1,1))
+#plot the surface of call options
+smilec <- data.frame(smilec1, smilec2, smilec3[9:17], smilec4[2:10] )
+implied_vol_c <- as.matrix(smilec)
 #smilec <- as.matrix(smilec, ncol = 4)
 Time <- c(T1,T2,T3,T4)
 Strike <- as.double(strikes1)
-persp(x = Strike, y = Time, z = smilec, xlim = range(Strike), ylim = range(Time), zlim = range(smilec),
-      xlab = "Strikes", ylab = "Maturaty", zlab = "IV")
+
+
+cc <- plot_ly(z = implied_vol_c, x = Strike, y = Time, type = "surface")
+c2 <- layout(cc, title = "The implied volatility surface of call option")
+c3 <- layout(c2, font = list(family = "Courier New, monospace"))
+c3
+
+#plot the surface of put options
+smilep <- data.frame(smilep1, smilep2, smilep3[9:17], smilep4[2:10] )
+implied_vol_p <- as.matrix(smilep)
+#smilec <- as.matrix(smilec, ncol = 4)
+Time <- c(T1,T2,T3,T4)
+Strike <- as.double(strikes1)
+
+
+pp <- plot_ly(z = implied_vol_p, x = Strike, y = Time, type = "surface")
+p2 <- layout(pp, title = "The implied volatility surface of put option")
+p3 <- layout(p2, font = list(family = "Courier New, monospace"))
+p3
 
 proc.time() - ptm
